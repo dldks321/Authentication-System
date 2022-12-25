@@ -10,7 +10,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 import models
 from schemas import UserInfo, LoginUserInfo, RegisterUserInfo
 from database import engine, get_database
-from crud import create_user, get_user
+from crud import create_user, get_user, get_all_user, change_user_active, change_user_authority, delete_user
 
 SECRET_KEY = "b33b0d6db6ee8e0104fb095c5521f131c810165a2a016b8739d3b81a5411b2de"
 ALGORITHM = "HS256"
@@ -92,3 +92,24 @@ async def verify_token(token: str, database: Session = Depends(get_database)):
     except JWTError:
         raise jwt_exception
     return {"detail": "Token validation successfully completed", "user": saved_user_info}
+
+
+@app.get("/user/get_all")
+async def get_all(init: int, end: int, database: Session = Depends(get_database)):
+    return get_all_user(database, init, end)
+
+
+@app.put("/user/change/active")
+async def change_active(user_id: str, is_active: bool, database: Session = Depends(get_database)):
+    return change_user_active(database, user_id, is_active)
+
+
+@app.put("/user/change/admin")
+async def change_admin(user_id: str, is_admin: bool, database: Session = Depends(get_database)):
+    return change_user_authority(database, user_id, is_admin)
+
+
+@app.delete("/user/delete")
+async def delete(user_id: str, database: Session = Depends(get_database)):
+    delete_user(database, user_id)
+    return {"detail": "delete is complete"}
