@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Page</title>
+</head>
+<body>
+    <h1>Success to login!</h1>
+    <form action="{% url 'complete_page' %}" method="POST">
+    {% csrf_token %}
+        <input type="submit" value="Logout">
+    </form>
+    <form action="{% url 'complete_page' %}" method="GET">
+    {% csrf_token %}
+        <input type="submit" value="User Management">
+    </form>
+</body>
+</html>

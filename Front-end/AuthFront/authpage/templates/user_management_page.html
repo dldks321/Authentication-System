@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management Page</title>
+</head>
+<body>
+    <form action="{% url 'user_management_page' %}" method="POST">
+    {% csrf_token %}
+        <h3>Change User Status</h3>
+        User ID :
+        <input type="text" name="ID">
+        <br>
+        Select Active Mode :
+        <select name="is_active">
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select>
+        <br>
+        Select Admin Mode :
+        <select name="is_admin">
+            <option value="False">False</option>
+            <option value="True">True</option>
+        </select>
+        <br>
+        <input type="submit" value="Change User Status">
+    </form>
+    <form action="{% url 'user_management_page' %}" method="GET">
+    {% csrf_token %}
+        <h3>Delete User</h3>
+        User ID :
+        <input type="text" name="ID">
+        <input type="submit" value="Delete User">
+    </form>
+    <a href="{% url 'complete_page' %}">Complete Page</a>
+</body>
+</html>
